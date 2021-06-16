@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>
+    {{ user.username }}
+</h3>
+<span>
+    {% for chat in user.get_chats_created %}
+        <a href="{% url 'chats:chat_detail' chat.id %}">{{ chat }}</a>
+    {% endfor %}
+</span>
+</body>
+</html>
