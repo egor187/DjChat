@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>
+    {{ chat.creator }}
+</h3>
+
+<textarea>
+    {% for message in chat.messages.all %}
+        {{ message.text }}
+        {{ message.created_at }}
+    {% endfor %}
+</textarea>
+
+</body>
+</html>
