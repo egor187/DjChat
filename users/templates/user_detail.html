@@ -1,17 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h3>
-    {{ user.username }}
-</h3>
-<span>
-    {% for chat in user.get_chats_created %}
-        <a href="{% url 'chats:chat_detail' chat.id %}">{{ chat }}</a>
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<aside>
+    <div class="col">
+        <p>
+            <a href="{% url 'chats:chat_create' %}">Create chat</a>
+        </p>
+    </div>
+</aside>
+
+
+Chats with my participation
+<p>
+    {% for chat in user.get_chats_membership %}
+    <p>
+        <a href="{% url 'chats:chat_detail' chat.id %}">Created by {{ chat.creator.username }} at {{ chat.created_at }}</a>
+    </p>
     {% endfor %}
-</span>
-</body>
-</html>
+</p>
+
+{% endblock content %}
