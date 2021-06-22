@@ -25,10 +25,13 @@ class ChatDetailView(LoginRequiredMixin, DetailView):
 
 class ChatCreateView(LoginRequiredMixin, CreateView):
     model = Chat
-    form_class = ChatCreateForm
+    fields = ["members", ]
     template_name  = "chat_create.html"
 
     def get(self, request, *args, **kwargs):
+        """
+        Override for moderate queryset output in rendered form
+        """
         form = ChatCreateForm()
         form.fields["members"].queryset = form.fields["members"].queryset.exclude(
             pk=self.request.user.pk
