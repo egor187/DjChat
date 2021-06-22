@@ -1,6 +1,7 @@
 from django.db import models
 # from users.models import MyUser
 from django.conf import settings
+from django.urls import reverse
 
 
 class Chat(models.Model):
@@ -10,6 +11,9 @@ class Chat(models.Model):
 
     def __str__(self):
         return f"Created by {self.creator} at: {self.created_at}"
+
+    def get_absolute_url(self):
+        return reverse('chats:chat_detail', args=[self.pk])
 
     class Meta:
         verbose_name_plural = "Chats"
