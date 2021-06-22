@@ -5,25 +5,30 @@
     <title>Title</title>
 </head>
 <body>
-<h3>
-    {{ chat.creator }}
-</h3>
+<h1>
+    Current user: {{ user }}
+</h1>
 
-<!--<textarea>-->
-<!--    {% for message in chat.messages.all %}-->
-<!--        {{ message.text }}-->
-<!--        {{ message.created_at }}-->
-<!--    {% endfor %}-->
-<!--</textarea>-->
+<h3>
+    Chat creator: {{ chat.creator }}
+</h3>
 
 <textarea id="chat-log" cols="100" rows="20"></textarea><br>
 <input id="chat-message-input" type="text" size="100"><br>
 <input id="chat-message-submit" type="button" value="Send">
 
-{{ chat|json_script:"chat" }}
+
+
+
+
+{{ chat_pk|json_script:"chat_pk" }}
+{{ all_messages|json_script:"all_messages" }}
+
+
 
 <script>
-    const chatNum = JSON.parse(document.getElementById('test').textContent);
+
+    const chatNum = JSON.parse(document.getElementById("chat_pk").textContent);
 
     const chatSocket = new WebSocket(
         'ws://'
