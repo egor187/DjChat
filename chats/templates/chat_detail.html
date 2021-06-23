@@ -1,24 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>
-    Current user: {{ user }}
-</h1>
+{% extends "base.html" %}
+{% load bootstrap4 %}
 
-<h3>
-    Chat creator: {{ chat.creator }}
-</h3>
+{% block content %}
 
-<textarea id="chat-log" cols="100" rows="20"></textarea><br>
-<input id="chat-message-input" type="text" size="100"><br>
+<aside>
+    <div class="col">
+        <p>
+            Chat creator: {{ chat.creator }}
+        </p>
+            Chat members:
+        <p></p>
+            {% for member in chat.members.all%}
+                <p>
+                    {{ member.username }}
+                </p>
+            {% endfor %}
+        <p>
+            <a href="{% url 'chats:chat_create' %}">Create new chat</a>
+        </p>
+        <p>
+            <a href="{% url 'chats:chat_delete' chat.pk %}">Delete this chat</a>
+        </p>
+    </div>
+</aside>
+
+<textarea id="chat-log" cols="50" rows="10"></textarea><br>
+<input id="chat-message-input" type="text" size="50"><br>
 <input id="chat-message-submit" type="button" value="Send">
-
-
-
 
 
 {{ chat_pk|json_script:"chat_pk" }}
@@ -64,5 +72,4 @@
     };
 </script>
 
-</body>
-</html>
+{% endblock content %}

@@ -1,7 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import DetailView, CreateView
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, CreateView, DeleteView
 from django.core import serializers
 
 from .forms import ChatCreateForm
@@ -56,3 +57,9 @@ class ChatCreateView(LoginRequiredMixin, CreateView):
     #     chat = Chat.objects.get(pk=form.instance.pk)
     #     chat.members.add(self.request.user.pk)
     #     return HttpResponseRedirect(self.get_success_url())
+
+
+class ChatDeleteView(DeleteView):
+    model = Chat
+    template_name = "chat_delete.html"
+    success_url = reverse_lazy("index")
