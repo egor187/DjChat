@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, DeleteView
 from django.core import serializers
@@ -13,6 +14,17 @@ class ChatDetailView(LoginRequiredMixin, DetailView):
     model = Chat
     template_name = "chat_detail.html"
     context_object_name = "chat"
+    access_denied_msg = "You are not member of this chat"
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Protect for getting access to chat_page from "not-members" of that chat
+        """
+        if self.kwargs["pk"] not in self.request.user.get_chats_membership().values_list("pk", flat=True):
+            messages.error(request, self.access_denied_msg)
+            return redirect(reverse_lazy("index"))
+        else:
+            return super().dispatch(request, args, kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
