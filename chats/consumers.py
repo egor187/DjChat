@@ -11,15 +11,19 @@ class ChatConsumer(WebsocketConsumer):
     Handler for 'ws' connection
     """
     def connect(self):
-        self.chat_room_number = f"chatroom_{self.scope['url_route']['kwargs']['pk']}"
+        self.chat_room_number = str(self.scope['url_route']['kwargs']['pk'])
 
-        # Join room group
-        async_to_sync(self.channel_layer.group_add)(
-            self.chat_room_number,
-            self.channel_name
-        )
+        # Checks for user-chat-member
+        if int(self.chat_room_number) in self.scope["user"].get_chats_membership().values_list("pk", flat=True):
+            # Join room group
+            async_to_sync(self.channel_layer.group_add)(
+                self.chat_room_number,
+                self.channel_name
+            )
+            self.accept()
 
-        self.accept()
+        else:
+            self.close()
 
     def disconnect(self, code):
         async_to_sync(self.channel_layer.group_discard)(
