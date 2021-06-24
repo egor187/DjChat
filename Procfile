@@ -1,1 +1,1 @@
-web: gunicorn DjangoChat.asgi
+web: daphne DjangoChat.asgi
