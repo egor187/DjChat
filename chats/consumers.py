@@ -39,16 +39,19 @@ class ChatConsumer(WebsocketConsumer):
         message = text_data_json["message"]
 
         chat_pk = self.scope['url_route']['kwargs']['pk']
+
+        #  for case with message save to db
         user = self.scope["user"]
         chat_obj = Chat.objects.get(pk=chat_pk)
-        message_obj = Message.objects.create(chat=chat_obj, sender=user, text=message)
+        # message_obj = Message.objects.create(chat=chat_obj, sender=user, text=message)
 
 
         async_to_sync(self.channel_layer.group_send)(
             self.chat_room_number,
             {
                 'type': 'chat_message',
-                'message': message_obj.text
+                # 'message': message_obj.text
+                'message': message
             }
         )
 

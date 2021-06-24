@@ -31,7 +31,7 @@ class ChatDetailView(LoginRequiredMixin, DetailView):
         context["chat_pk"] = Chat.objects.get(pk=self.kwargs["pk"]).pk
 
         # context["all_messages"] = serializers.serialize("json", Message.objects.filter(chat=self.object), fields="text")
-        context["all"] = Message.objects.filter(chat=self.object).values_list("text", flat=True)
+        # context["all"] = Message.objects.filter(chat=self.object).values_list("text", flat=True)
 
         return context
 
