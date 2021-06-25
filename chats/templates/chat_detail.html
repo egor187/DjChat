@@ -39,7 +39,7 @@
     const chatNum = JSON.parse(document.getElementById("chat_pk").textContent);
 
     const chatSocket = new WebSocket(
-        'ws://'
+        'wss://'
         + window.location.host
         + '/wss/chat/'
         + chatNum
