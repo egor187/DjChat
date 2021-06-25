@@ -12,7 +12,8 @@ import os
 from django.core.asgi import get_asgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DjangoChat.settings')
-django_asgi_app = get_asgi_application()
+django_asgi_app = get_asgi_application()  # this method should be called BEFORE any middleware (such as
+                                          # AuthMiddlewareStack) that get access to users.models
 
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
