@@ -39,9 +39,9 @@
     const chatNum = JSON.parse(document.getElementById("chat_pk").textContent);
 
     const chatSocket = new WebSocket(
-        'ws://'
+        'wss://'
         + window.location.host
-        + '/ws/chat/'
+        + '/wss/chat/'
         + chatNum
         + '/'
     );
