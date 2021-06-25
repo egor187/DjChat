@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse_lazy
 
 from chats.models import Chat
 
@@ -17,3 +18,7 @@ class MyUser(AbstractUser):
         """
         chats = Chat.objects.filter(members=self)
         return chats
+
+    def get_absolute_url(self):
+        return reverse_lazy('users:user_detail', args=[self.pk])
+
