@@ -1,3 +1,9 @@
+# My notes
+notes.my
+
+# Certificates
+*.pem
+
 # Editors
 .vscode/
 .idea/
