@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
@@ -36,13 +37,14 @@ class ChatConsumer(WebsocketConsumer):
         Receives messages from JS and echo it back
         """
         text_data_json = json.loads(text_data)
-        message = text_data_json["message"]
+        message = f"{self.scope['user'].username} at {datetime.time(datetime.now().replace(microsecond=0))}:" \
+                  f" \n{text_data_json['message']}"  # add username to each message from frontend
 
-        chat_pk = self.scope['url_route']['kwargs']['pk']
 
         #  for case with message save to db
-        user = self.scope["user"]
-        chat_obj = Chat.objects.get(pk=chat_pk)
+        # chat_pk = self.scope['url_route']['kwargs']['pk']
+        # user = self.scope["user"]
+        # chat_obj = Chat.objects.get(pk=chat_pk)
         # message_obj = Message.objects.create(chat=chat_obj, sender=user, text=message)
 
 
